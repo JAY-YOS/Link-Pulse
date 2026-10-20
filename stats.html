@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Analytics for {{ link.short_code }}{% endblock %}
+{% block content %}
+<p><a href="/">&larr; All links</a></p>
+<h1>{{ short }}</h1>
+<p style="color:var(--muted);word-break:break-all">Redirects to {{ link.original_url }}</p>
+
+<div class="stats">
+  <div class="stat"><b>{{ s.total_clicks }}</b><small>Total clicks</small></div>
+  <div class="stat"><b>{{ s.unique_visitors }}</b><small>Unique visitors</small></div>
+  <div class="stat"><b>{{ link.status }}</b><small>Status</small></div>
+</div>
+
+<div class="card"><h2>Clicks in the last 7 days</h2><canvas id="daily" height="90"></canvas></div>
+
+<div class="grid">
+  <div class="card"><h2>Devices</h2><canvas id="devices"></canvas></div>
+  <div class="card"><h2>Browsers</h2><canvas id="browsers"></canvas></div>
+  <div class="card"><h2>Traffic sources</h2>
+    {% if s.referrers %}<table>{% for k, v in s.referrers.items() %}<tr><td>{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</table>
+    {% else %}<p>No clicks yet.</p>{% endif %}
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+const s = {{ s|tojson }};
+const colors = ["#1e5eff", "#14213d", "#6c8cff", "#9aa7c2", "#d5dcf0"];
+new Chart(document.getElementById("daily"), {
+  type: "line",
+  data: { labels: s.labels, datasets: [{ data: s.daily, borderColor: "#1e5eff", backgroundColor: "#1e5eff22", fill: true, tension: .3 }] },
+  options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
+});
+function pie(id, obj) {
+  new Chart(document.getElementById(id), {
+    type: "doughnut",
+    data: { labels: Object.keys(obj), datasets: [{ data: Object.values(obj), backgroundColor: colors }] }
+  });
+}
+pie("devices", s.devices);
+pie("browsers", s.browsers);
+</script>
+{% endblock %}

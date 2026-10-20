@@ -1,0 +1,34 @@
+:root { --ink:#14213d; --blue:#1e5eff; --line:#dde3ee; --bg:#f6f8fc; --muted:#5b667a; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--ink); background:var(--bg); line-height:1.5; }
+header { background:#fff; border-bottom:1px solid var(--line); }
+header div, main { max-width:960px; margin:0 auto; padding:16px 20px; }
+header a { font-size:1.4rem; font-weight:700; color:var(--ink); text-decoration:none; }
+header a span { color:var(--blue); }
+h1 { font-size:1.5rem; margin:8px 0 16px; }
+h2 { font-size:1.1rem; margin:0 0 12px; }
+a { color:var(--blue); }
+.card { background:#fff; border:1px solid var(--line); border-radius:8px; padding:20px; margin-bottom:20px; }
+.row { display:flex; gap:12px; flex-wrap:wrap; }
+.row > * { flex:1 1 160px; }
+label { display:block; font-size:.85rem; color:var(--muted); margin-bottom:4px; }
+input { width:100%; padding:9px 10px; border:1px solid var(--line); border-radius:6px; font:inherit; }
+input:focus, button:focus-visible { outline:2px solid var(--blue); outline-offset:1px; }
+button { background:var(--blue); color:#fff; border:0; border-radius:6px; padding:10px 18px; font:inherit; font-weight:600; cursor:pointer; margin-top:14px; }
+.stats { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px; }
+.stat { flex:1 1 140px; background:#fff; border:1px solid var(--line); border-radius:8px; padding:14px 16px; }
+.stat b { display:block; font-size:1.6rem; }
+.stat small { color:var(--muted); }
+table { width:100%; border-collapse:collapse; font-size:.92rem; }
+th, td { text-align:left; padding:9px 8px; border-bottom:1px solid var(--line); }
+th { color:var(--muted); font-weight:600; }
+td.url { max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.badge { padding:2px 8px; border-radius:10px; font-size:.8rem; background:#e6f6ec; color:#1a7f43; }
+.badge.off { background:#fdeaea; color:#b3261e; }
+.error { background:#fdeaea; color:#b3261e; padding:10px 12px; border-radius:6px; margin-bottom:14px; }
+.ok { background:#e6f6ec; border-color:#b7e3c7; }
+.copy { display:flex; gap:8px; align-items:center; }
+.copy input { font-weight:600; }
+.copy button { margin:0; white-space:nowrap; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; }
+.scroll { overflow-x:auto; }

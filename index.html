@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="stats">
+  <div class="stat"><b>{{ links|length }}</b><small>Links</small></div>
+  <div class="stat"><b>{{ total_clicks }}</b><small>Total clicks</small></div>
+</div>
+
+<div class="card">
+  <h2>Create a short link</h2>
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+  <form method="post">
+    <label for="url">Long URL</label>
+    <input id="url" name="url" type="url" placeholder="https://example.com/a/very/long/page" value="{{ form.get('url','') }}" required>
+    <div class="row" style="margin-top:12px">
+      <div><label for="alias">Custom alias (optional)</label><input id="alias" name="alias" placeholder="results-2025" value="{{ form.get('alias','') }}"></div>
+      <div><label for="expiry">Expiry date (optional)</label><input id="expiry" name="expiry" type="date" value="{{ form.get('expiry','') }}"></div>
+      <div><label for="limit">Click limit (optional)</label><input id="limit" name="limit" type="number" min="1" value="{{ form.get('limit','') }}"></div>
+    </div>
+    <button type="submit">Create short link</button>
+  </form>
+</div>
+
+{% if new_link %}
+<div class="card ok">
+  <h2>Link created</h2>
+  <div class="copy">
+    <input id="newurl" value="{{ new_url }}" readonly>
+    <button type="button" onclick="navigator.clipboard.writeText(document.getElementById('newurl').value); this.textContent='Copied'">Copy link</button>
+  </div>
+</div>
+{% endif %}
+
+<div class="card scroll">
+  <h2>Your links</h2>
+  {% if links %}
+  <table>
+    <tr><th>Short code</th><th>Original URL</th><th>Clicks</th><th>Expires</th><th>Status</th><th></th></tr>
+    {% for l in links %}
+    <tr>
+      <td><a href="/{{ l.short_code }}" target="_blank">{{ l.short_code }}</a></td>
+      <td class="url" title="{{ l.original_url }}">{{ l.original_url }}</td>
+      <td>{{ l.click_count }}{% if l.click_limit %} / {{ l.click_limit }}{% endif %}</td>
+      <td>{{ l.expiry_date or "Never" }}</td>
+      <td><span class="badge {{ '' if l.status == 'Active' else 'off' }}">{{ l.status }}</span></td>
+      <td><a href="/stats/{{ l.short_code }}">Analytics</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p>No links yet. Create your first one above.</p>
+  {% endif %}
+</div>
+{% endblock %}
