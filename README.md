@@ -51,8 +51,8 @@ linkpulse/
 ## Run locally
 
 ```bash
-git clone <your-repo-url>
-cd linkpulse
+git clone https://github.com/JAY-YOS/Link-Pulse.git
+cd Link-Pulse
 pip install -r requirements.txt
 python app.py
 ```
